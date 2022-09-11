@@ -1,4 +1,6 @@
 using CosmeticsService.Context;
+using CosmeticsService.Interfaces;
+using CosmeticsService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,7 @@ builder.Services.AddDbContext<CosmeticsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("default"));
 });
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddTransient<ICosmeticsPersistenceService, CosmeticsPersistenceService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
