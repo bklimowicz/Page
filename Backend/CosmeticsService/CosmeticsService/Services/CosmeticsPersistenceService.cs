@@ -1,6 +1,8 @@
 ﻿using CosmeticsService.Context;
 using CosmeticsService.Interfaces;
 using CosmeticsService.Model;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CosmeticsService.Services
 {
@@ -34,17 +36,31 @@ namespace CosmeticsService.Services
 
         public Product? GetProductByName(string productName)
         {
-            return this._dbContext.Products!.FirstOrDefault(x => x.Name == productName);
+            return this._dbContext.Products!
+                .Include(product => product.ProductCategory)
+                .Include(product => product.Manufacturer)
+                .FirstOrDefault(x => x.Name == productName);
+        }
+
+        public Product? GetProductById(int productId)
+        {
+            return this._dbContext.Products!
+                .Include(product => product.ProductCategory)
+                .Include(product => product.Manufacturer)
+                .FirstOrDefault(x => x.Id == productId);
         }
 
         public ICollection<Product> GetProducts()
         {
-            return this._dbContext.Products!.ToList();
+            return this._dbContext.Products!
+                .Include(product => product.ProductCategory)
+                .Include(product => product.Manufacturer)
+                .ToList();
         }
 
         public void UpdateProduct(Product product)
         {
-            this._dbContext.Products!.Update(product);
+            this._dbContext.Update(product);
             this._dbContext.SaveChanges();
         }
     }

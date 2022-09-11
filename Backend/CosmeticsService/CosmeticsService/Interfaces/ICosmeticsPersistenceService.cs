@@ -6,6 +6,7 @@ namespace CosmeticsService.Interfaces
     {
         ICollection<Product> GetProducts();
         Product? GetProductByName(string productName);
+        Product? GetProductById(int productId);
         void AddProduct(Product product);
         void DeleteProduct(string productName);
         void UpdateProduct(Product product);

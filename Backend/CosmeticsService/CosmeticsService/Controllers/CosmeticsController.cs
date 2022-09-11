@@ -36,16 +36,18 @@ namespace CosmeticsService.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Product productDto)
+        public ActionResult Post([FromBody] ProductDto productDto)
         {
-            _cosmeticsPersistenceService.AddProduct(productDto);
+            Product? product = this._mapper.Map<Product>(productDto);
+            _cosmeticsPersistenceService.AddProduct(product);
             return Ok();
         }
 
         [HttpPatch]
-        public ActionResult Patch([FromBody] Product productDto)
+        public ActionResult Patch([FromBody] ProductDto productDto)
         {
-            _cosmeticsPersistenceService.UpdateProduct(productDto);
+            Product? product = this._mapper.Map<Product>(productDto);
+            _cosmeticsPersistenceService.UpdateProduct(product);
             return Ok();
         }
 
